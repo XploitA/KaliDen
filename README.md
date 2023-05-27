@@ -1,2 +1,2 @@
 # KaliDen
-KaliDen: No more breaking system packages, while installing kali tools to any Linux Distro.
+KaliDen: No more breaking system packages, while installing Kali tools to any Linux Distro.
