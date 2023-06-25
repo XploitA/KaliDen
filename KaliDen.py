@@ -11,7 +11,7 @@ BANNER = """
 ██╔═██╗ ██╔══██║██║     ██║██║  ██║██╔══╝  ██║╚██╗██║
 ██║  ██╗██║  ██║███████╗██║██████╔╝███████╗██║ ╚████║
 ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚═════╝ ╚══════╝╚═╝  ╚═══╝
-                                        version(1.0)                    
+                                        version(1.5)                    
 """
 
 # Colors for terminal outputs
@@ -109,7 +109,7 @@ def create_executable(directory):
             CHROOT_PATH="{directory}"
             xhost +local:
             clear
-            chroot $CHROOT_PATH
+            chroot $CHROOT_PATH "$@"
             """)
         os.system("chmod +x /usr/local/bin/kshell")
     except Exception as e:
@@ -226,3 +226,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+ 
