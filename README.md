@@ -24,7 +24,7 @@ KaliDen comes into play here. This Python script enables you to install Kali Lin
 ## Installation
 
 ### Requirements
-- Any Linux Distro (Debian based preffered)
+- Any Linux Distro 
 - python3
 - debootstrap
 
