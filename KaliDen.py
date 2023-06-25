@@ -38,9 +38,9 @@ def print_color(color, msg):
 # Checks if debootstrap is installed
 def is_debootstrap_installed():
     try:
-        output = subprocess.check_output(['dpkg', '-s', 'debootstrap']).decode('utf-8')
-        return 'Status: install ok installed' in output
-    except subprocess.CalledProcessError:
+        output = subprocess.run(["debootstrap", "--help"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        return True
+    except FileNotFoundError:
         return False
 
 # Creates the chroot environment and installs Kali Linux in it
@@ -80,8 +80,8 @@ def configure_environment(directory, shared_dir=None):
 
     mounts = [f"/dev    {directory}/dev    none    bind    0    0",
               f"/proc   {directory}/proc    none    bind    0    0",
-              f"/sys    {directory}/sys    none    bind    0    0"]
-
+              f"/sys    {directory}/sys    none    bind    0    0",
+              f"newinstance  {directory}/dev/pts    devpts    defaults,newinstance    0   0"] 
     if shared_dir:
         mounts.append(f"{shared_dir}    {directory}/root/shared    none    bind    0    0")
 
@@ -117,6 +117,12 @@ def create_executable(directory):
         exit()
 
 # Installer function that drives the whole installation process
+def post_install(directory):
+    pidirectory = directory 
+    postinstall = subprocess.run(['sudo', 'chroot', pidirectory, "/./postinstall.sh"], capture_output=True)
+        
+
+
 def install_environemnt():
     if not is_debootstrap_installed():
         print_color(RED, f"{CROSS}  debootstrap is not installed exiting.\n")
@@ -192,10 +198,15 @@ def revert_environment():
 
 def main():
     print_color(BLUE_BOLD, BANNER)
+    username=subprocess.check_output(['whoami']).decode('utf-8')
     parser = argparse.ArgumentParser(description=f"{CYAN}{STAR}  Run the script without any arguments to install the Kali Linux inside a chroot environment.{RESET}\n")
     parser.add_argument("-R", "--revert", action="store_true", help="Revert the Kali chroot environment")
     args = parser.parse_args()
-
+    if "root" not in username:
+        print_color(RED, f"{CROSS}  Run this script with sudo.\n")
+        exit()
+    else:
+        pass
     if args.revert:
         revert_environment()
     else:
