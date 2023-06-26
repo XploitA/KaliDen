@@ -33,7 +33,7 @@ KaliDen comes into play here. This Python script enables you to install Kali Lin
 - `sudo python3 kaliden.py -h` to see Usage
 - `sudo python3 kaliden.py` to start the interactive installer
 - `sudo python3 kaliden.py -R` OR `sudo python3 kaliden.py --R` to remove the chroot configuration.
-
+- Post installation run `sudo kshell` to drop into interactive kali linux shell or `sudo kshell <tool_name/binary_name>` to run a tool/binary directly without starting a interactive shell
 ## Known Issues
 
 - Although the script creates installation directory if not present, if you choose to install the environment to a non-empty directory, the script does not check for a non-empty directory and installs the environment, which might messup any pre-existing files in that directory.   
